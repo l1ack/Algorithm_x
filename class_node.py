@@ -4,7 +4,7 @@ class Node:
         self.data = dat
         self.left = left
         self.right = right
- 
+# type postorder: List[int] 
  # how to rebuild a tree.rear为后序,
 #    *
 #   / \
@@ -48,18 +48,41 @@ def post_order(t):
     post_order(t.right)
     print(t.data)
 
-def levelOrder(self, root: Node):
+def levelOrder(root: Node):
     if not root: return []
-    res, deque = [], collections.deque([root])
+    res, deque = [], collections.deque([root])#层序遍历存储到队列
     while deque:
         tmp = collections.deque()
-        for _ in range(len(deque)):
+        for _ in range(len(deque)):#只值计算一次吗len(deque)
             node = deque.popleft()
-            if len(res) % 2: tmp.appendleft(node.val) # 偶数层 -> 队列头部
-            else: tmp.append(node.val) # 奇数层 -> 队列尾部
+            if len(res) % 2: tmp.appendleft(node.data) # 偶数层 -> 队列头部
+            else: tmp.append(node.data) # 奇数层 -> 队列尾部
             if node.left: deque.append(node.left)
             if node.right: deque.append(node.right)
         res.append(list(tmp))
+    print(res)
+
+# 倒后序遍历,弹栈
+# def verifyPostorder(self, postorder):
+#     stack, root = [], float("+inf")
+#     for i in range(len(postorder) - 1, -1, -1):
+#         # print(stack)
+#         # print(root)
+#         if postorder[i] > root: return False
+#         while(stack and postorder[i] < stack[-1]):
+#         #现在的数小于栈尾，弹栈，直到栈尾小于当前数;也就是第一个大于当前数的数作为root，
+#         #stack[-1]表示栈尾，也是倒后序遍历最新读到的数字;
+#         #这里表示数字开始递减，表明开始遇到左子树，root
+#         #对于原数组，最后一个一定是root,但是对于接下来，如何判断root，
+#         #右子树入栈是为了判断根节点root，
+#             root = stack.pop()
+#         stack.append(postorder[i])
+#         print(root)
+#     return True
+        # """
+        # :type postorder: List[int]
+        # :rtype: bool
+        # """
 
 def pre_order(t):
     if t == None:
@@ -203,7 +226,7 @@ def create_BTree_By_List(array):
 #         return None
 
 if __name__ == "__main__":
-    pre = ['d','b','a','c','e','g','f']
+    pre = ['d','a','c','e','b','g','f']
     center = ['a','b','c','d','e','f','g']
     # pre = [1,6,7,3,0,2,8]
     # center = ['a','b','c','d','e','f','g']
@@ -213,5 +236,6 @@ if __name__ == "__main__":
     # print('*******')
     #print(BSTSequences(t))
     t=build_tree(pre)
-    print(pre_order(t))
-    print(center_order(t))
+    # print(pre_order(t))
+    # print(center_order(t))
+    print(levelOrder(t))
